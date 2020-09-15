@@ -2,6 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <PackageId>CorporeRMApi</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Marcelo Wollmann Figueiró</Authors>
+    <Company>Uniarp</Company>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,6 +15,7 @@
     <PackageReference Include="System.ServiceModel.Http" Version="4.4.*" />
     <PackageReference Include="System.ServiceModel.NetTcp" Version="4.4.*" />
     <PackageReference Include="System.ServiceModel.Security" Version="4.4.*" />
+    <PackageReference Include="Uniarp.Util" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,10 +24,6 @@
 
   <ItemGroup>
     <Folder Include="Connected Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Uniarp\Uniarp.csproj" />
   </ItemGroup>
 
 </Project>
