@@ -122,7 +122,7 @@ namespace CorporeRMApi
             return dataServerResult.Data;
         }
 
-        public async Task<T> CreateAsync<T>(T model, string dataServerName)
+        public async Task<T> CreateAsync<T>(object model, string dataServerName)
         {
             AddAuthorization();
             var response = await _httpClient.PostAsJsonAsync($"rest/{dataServerName}", model);
@@ -133,7 +133,7 @@ namespace CorporeRMApi
             return dataServerResult.Data;
         }
 
-        public async Task<T> PutAsync<T>(string id, T model, string dataServerName)
+        public async Task<T> PutAsync<T>(string id, object model, string dataServerName)
         {
             AddAuthorization();
             var response = await _httpClient.PutAsJsonAsync($"rest/{dataServerName}/{id}", model);

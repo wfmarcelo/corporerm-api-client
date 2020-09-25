@@ -20,9 +20,9 @@ namespace CorporeRMApi.Services
             _api.SetAuthorization(auth);
         }
 
-        public async Task<T> CreateAsync(T model)
+        public async Task<T> CreateAsync(object model)
         {
-            return await _api.CreateAsync(model, _dataServerName);
+            return await _api.CreateAsync<T>(model, _dataServerName);
         }
 
         public async Task<T> DeleteAsync(string id)
@@ -40,9 +40,9 @@ namespace CorporeRMApi.Services
             return await _api.GetAsync<T>(id, _dataServerName);
         }
 
-        public async Task<T> UpdateAsync(string id, T model)
+        public async Task<T> UpdateAsync(string id, object model)
         {
-            return await _api.PutAsync(id, model, _dataServerName);
+            return await _api.PutAsync<T>(id, model, _dataServerName);
         }
 
         public async Task<T> UpdatePartialAsync(string id, object model)

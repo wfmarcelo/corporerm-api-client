@@ -10,11 +10,11 @@ namespace CorporeRMApi.Data
 
         Task<IList<T>> GetAllAsync(int start = 0, int limit = 0, string filter = null);
 
-        Task<T> CreateAsync(T model);
+        Task<T> CreateAsync(object model);
 
         Task<T> DeleteAsync(string id);
 
-        Task<T> UpdateAsync(string id, T model);
+        Task<T> UpdateAsync(string id, object model);
         Task<T> UpdatePartialAsync(string id, object model);
         void SetAuthorization(string auth);
 
