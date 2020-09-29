@@ -17,6 +17,7 @@ namespace CorporeRMApi.Data
         Task<T> UpdateAsync(string id, object model);
         Task<T> UpdatePartialAsync(string id, object model);
         void SetAuthorization(string auth);
+        void SetContexto(Contexto contexto);
 
 
     }

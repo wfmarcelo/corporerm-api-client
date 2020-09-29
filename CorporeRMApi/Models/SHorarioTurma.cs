@@ -19,7 +19,9 @@ namespace CorporeRMApi.Models
         public string CodPredio { get; set; }
         [MaxLength(10)]
         public string CodSala { get; set; }
+        [Display(Name = "Data inicial")]
         public DateTime? DataInicial { get; set; }
+        [Display(Name = "Data final")]
         public DateTime? DataFinal { get; set; }
         [MaxLength(60)]
         public string Locacao { get; set; }
@@ -27,15 +29,18 @@ namespace CorporeRMApi.Models
         public string TipoAula { get; set; }
         [MaxLength(15)]
         public string NomeTurno { get; set; }
+        [Display(Name="Dia semana")]
         public short? DiaSemana { get; set; }
         [MaxLength(5)]
+        [Display(Name = "Hora inicial")]
         public string HoraInicial { get; set; }
         [MaxLength(5)]
+        [Display(Name = "Hora final")]
         public string HoraFinal { get; set; }
         public int? IdPerLet { get; set; }
         [MaxLength(5)]
         public string CodBloco { get; set; }
-        public short CodTipoSala { get; set; }
+        public short? CodTipoSala { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime? RecCreatedOn { get; set; }
         public string RecModifiedBy { get; set; }

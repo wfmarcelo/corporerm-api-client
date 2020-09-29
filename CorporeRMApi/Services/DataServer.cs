@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CorporeRMApi.Data;
+using CorporeRMApi.Models;
 
 namespace CorporeRMApi.Services
 {
@@ -48,6 +49,11 @@ namespace CorporeRMApi.Services
         public async Task<T> UpdatePartialAsync(string id, object model)
         {
             return await _api.PatchAsync<T>(id, model, _dataServerName);
+        }
+
+        public void SetContexto(Contexto contexto)
+        {
+            _api.SetContexto(contexto);
         }
     }
 }

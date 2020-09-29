@@ -36,6 +36,24 @@ namespace CorporeRMApi
             _httpClient.DefaultRequestHeaders.Authorization = authorization;
         }
 
+        public void SetContexto(Contexto contexto)
+        {
+            _httpClient.DefaultRequestHeaders.Add("CodColigada", contexto.CodColigada.ToString());
+            _httpClient.DefaultRequestHeaders.Add("CodUsuario", contexto.CodUsuario);
+            _httpClient.DefaultRequestHeaders.Add("DataSistema", contexto.DataSistema.ToString());
+            _httpClient.DefaultRequestHeaders.Add("CodUsuarioServico", contexto.CodUsuarioServico);
+            _httpClient.DefaultRequestHeaders.Add("CodFilial", contexto.CodFilial.ToString());
+            _httpClient.DefaultRequestHeaders.Add("IdPrj", contexto.IdPrj.ToString());
+            _httpClient.DefaultRequestHeaders.Add("CodTipoCurso", contexto.CodTipoCurso.ToString());
+            _httpClient.DefaultRequestHeaders.Add("CodUnidadeBib", contexto.CodUnidadeBib.ToString());
+            _httpClient.DefaultRequestHeaders.Add("CodLocPrt", contexto.CodLocPrt.ToString());
+            _httpClient.DefaultRequestHeaders.Add("EduTipoUsr", contexto.EduTipoUsr);
+            _httpClient.DefaultRequestHeaders.Add("RhTipoUsr", contexto.RhTipoUsr);
+            _httpClient.DefaultRequestHeaders.Add("ChapaFuncionario", contexto.ChapaFuncionario);
+            _httpClient.DefaultRequestHeaders.Add("CodigoExterno", contexto.CodigoExterno);
+            _httpClient.DefaultRequestHeaders.Add("ExercicioFiscal", contexto.ExercicioFiscal);
+        }
+
         private void AddAuthorization()
         {
             string auth;
