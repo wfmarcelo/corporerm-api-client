@@ -24,6 +24,8 @@ namespace CorporeRMApi.Models
         public DateTime? DtInicio { get; set; }
         public DateTime? DtFim { get; set; }
         public DateTime? DtPrevista { get; set; }
+        [MaxLength(16)]
+        public string Calendario { get; set; }
         [MaxLength(60)]
         public string Descricao { get; set; }
         [MaxLength(60)]

@@ -173,6 +173,7 @@ namespace CorporeRMApi.Models
         [Display(Name = "CH Alternativa")]
         public string CH_Horas { get; set; }
         public string Superlocacao_Prof { get; set; }
+        public string CadastraHorario { get; set; }
     }
     
 }
