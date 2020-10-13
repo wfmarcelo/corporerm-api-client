@@ -88,7 +88,7 @@ namespace CorporeRMApi
 
             AddAuthorization(model.GetAuthenticationHeader());
 
-            var response = await _httpClient.GetAsync("service/educacional");
+            var response = await _httpClient.GetAsync("RMSRestDataServer/service/educacional");
 
             return new AuthResult
             {
@@ -108,7 +108,7 @@ namespace CorporeRMApi
         public async Task<T> GetAsync<T>(string id, string dataServerName)
         {
             AddAuthorization();
-            var response = await _httpClient.GetAsync($"rest/{dataServerName}/{id}");
+            var response = await _httpClient.GetAsync($"RMSRestDataServer/rest/{dataServerName}/{id}");
             await response.EnsureSuccessStatusCodeAsync();
 
             var dataServerResult = await response.Content.ReadAsJsonAsync<DataServerResult<T>>();
@@ -119,7 +119,7 @@ namespace CorporeRMApi
         public async Task<T> GetAllAsync<T>(int start, int limit, string filter, string dataServerName)
         {
             AddAuthorization();
-            var response = await _httpClient.GetAsync($"rest/{dataServerName}?start={start}&limit={limit}&filter={filter}");
+            var response = await _httpClient.GetAsync($"RMSRestDataServer/rest/{dataServerName}?start={start}&limit={limit}&filter={filter}");
             await response.EnsureSuccessStatusCodeAsync();
 
             var dataServerResult = await response.Content.ReadAsJsonAsync<DataServerResult<T>>();
@@ -132,7 +132,7 @@ namespace CorporeRMApi
         public async Task<T> DeleteAsync<T>(string id, string dataServerName)
         {
             AddAuthorization();
-            var response = await _httpClient.DeleteAsync($"rest/{dataServerName}/{id}");
+            var response = await _httpClient.DeleteAsync($"RMSRestDataServer/rest/{dataServerName}/{id}");
             await response.EnsureSuccessStatusCodeAsync();
 
             var dataServerResult = await response.Content.ReadAsJsonAsync<DataServerResult<T>>();
@@ -143,7 +143,7 @@ namespace CorporeRMApi
         public async Task<T> CreateAsync<T>(object model, string dataServerName)
         {
             AddAuthorization();
-            var response = await _httpClient.PostAsJsonAsync($"rest/{dataServerName}", model);
+            var response = await _httpClient.PostAsJsonAsync($"RMSRestDataServer/rest/{dataServerName}", model);
             await response.EnsureSuccessStatusCodeAsync();
 
             var dataServerResult = await response.Content.ReadAsJsonAsync<DataServerResult<T>>();
@@ -154,7 +154,7 @@ namespace CorporeRMApi
         public async Task<T> PutAsync<T>(string id, object model, string dataServerName)
         {
             AddAuthorization();
-            var response = await _httpClient.PutAsJsonAsync($"rest/{dataServerName}/{id}", model);
+            var response = await _httpClient.PutAsJsonAsync($"RMSRestDataServer/rest/{dataServerName}/{id}", model);
             await response.EnsureSuccessStatusCodeAsync();
 
             var dataServerResult = await response.Content.ReadAsJsonAsync<DataServerResult<T>>();
@@ -165,7 +165,7 @@ namespace CorporeRMApi
         public async Task<T> PatchAsync<T>(string id, object model, string dataServerName)
         {
             AddAuthorization();
-            var response = await _httpClient.PatchAsJsonAsync($"rest/{dataServerName}/{id}", model);
+            var response = await _httpClient.PatchAsJsonAsync($"RMSRestDataServer/rest/{dataServerName}/{id}", model);
             await response.EnsureSuccessStatusCodeAsync();
 
             var dataServerResult = await response.Content.ReadAsJsonAsync<DataServerResult<T>>();

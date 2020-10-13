@@ -18,7 +18,7 @@ namespace CorporeRMApi.Models
         public string Nome { get; set; }
         public string IdTurmaDisc { get; set; }
         public string DesconsideraPonto { get; set; }
-        public int CodHor { get; set; }
+        public int? CodHor { get; set; }
         public DateTime? DataInicial { get; set; }
         public DateTime? DataFinal { get; set; }
 

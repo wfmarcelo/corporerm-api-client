@@ -60,6 +60,7 @@ namespace CorporeRMApi.Models
         [MaxLength(1)]
         public string CodEventoAtraso { get; set; }
         [MaxLength(100)]
+        [Display(Name = "Disciplina")]
         public string NomeDisc { get; set; }
         public string Nome { get; set; }
         [MaxLength(1)]
@@ -69,6 +70,8 @@ namespace CorporeRMApi.Models
         public string CodBloco { get; set; }
         [Display(Name = "Código curso")]
         public string CodCurso { get; set; }
+        [Display(Name = "Curso")]
+        public string NomeCurso { get; set; }
         [Display(Name = "Habilitação")]
         public string CodHabilitacao { get; set; }
         [Display(Name = "Código Grade")]
@@ -109,6 +112,7 @@ namespace CorporeRMApi.Models
         public string MascaraTurmaEspelho { get; set; }
         public int? NumMaxAlunoOutraColigada { get; set; }
         public string CodPerLet { get; set; }
+        public int? CodPeriodo { get; set; }
 
         public IList<STurmaDiscCompl> STurmaDiscCompl { get; set; }
 
@@ -145,6 +149,29 @@ namespace CorporeRMApi.Models
             hash.Add(DtFinal);
             return hash.ToHashCode();
         }
+
+        public string GetDiscGradeId()
+        {
+            return $"{CodColigada}$_${CodCurso}$_${CodHabilitacao}$_${CodGrade}$_${CodPeriodo}$_${CodDisc}";
+        }
+
+        public IList<object> GetPrimaryKeyList()
+        {
+            return new List<object> 
+            {
+                CodColigada, 
+                IdTurmaDisc
+            };
+        }
+        public IList<string> GetPrimaryKeyNames()
+        {
+            return new List<string>
+            {
+                "CODCOLIGADA", 
+                "IDTURMADISC"
+            };
+        }
+
     }
 
     public class STurmaDiscCompl
@@ -175,5 +202,5 @@ namespace CorporeRMApi.Models
         public string Superlocacao_Prof { get; set; }
         public string CadastraHorario { get; set; }
     }
-    
+
 }

@@ -41,6 +41,7 @@ namespace CorporeRMApi.Models
         [MaxLength(16)]
         public string CodCalendario { get; set; }
         [Required]
+        [Display(Name = "Dia semana")]
         public DateTime DiaFeriado { get; set; }
         [MaxLength(50)]
         public string Nome { get; set; }
