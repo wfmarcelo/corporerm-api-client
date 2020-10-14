@@ -155,11 +155,25 @@ namespace CorporeRMApi.Models
             return $"{CodColigada}$_${CodCurso}$_${CodHabilitacao}$_${CodGrade}$_${CodPeriodo}$_${CodDisc}";
         }
 
+        public string GetGradeId()
+        {
+            return $"{CodColigada}$_${CodCurso}$_${CodHabilitacao}$_${CodGrade}";
+        }
+        public string GetCursoId()
+        {
+            return $"{CodColigada}$_${CodCurso}";
+        }
+
+        public string GetDisciplinaId()
+        {
+            return $"{CodColigada}$_${CodDisc}";
+        }
+
         public IList<object> GetPrimaryKeyList()
         {
-            return new List<object> 
+            return new List<object>
             {
-                CodColigada, 
+                CodColigada,
                 IdTurmaDisc
             };
         }
@@ -167,7 +181,7 @@ namespace CorporeRMApi.Models
         {
             return new List<string>
             {
-                "CODCOLIGADA", 
+                "CODCOLIGADA",
                 "IDTURMADISC"
             };
         }
