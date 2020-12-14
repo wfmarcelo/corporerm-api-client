@@ -19,8 +19,13 @@ namespace CorporeRMApi.Models
         [Required]
         [MaxLength(1)]
         public string TipoNota { get; set; }
-        [Display(Name="Carga horária")]
+        [Display(Name = "Carga horária")]
         public decimal? CH { get; set; }
+
+        public string GetNomeComCodigo()
+        {   
+            return $"{Nome} ({CodDisc})";
+        }
 
         public override bool Equals(object obj)
         {
@@ -35,6 +40,7 @@ namespace CorporeRMApi.Models
                 this.CodColigada == disciplina.CodColigada &&
                 this.CodDisc == disciplina.CodDisc;
         }
+
 
         public override int GetHashCode()
         {

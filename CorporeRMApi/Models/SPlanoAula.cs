@@ -57,5 +57,10 @@ namespace CorporeRMApi.Models
         public string Predio { get; set; }
         public string Bloco { get; set; }
         public string Sala { get; set; }
+
+        public string GetTurmaDiscId()
+        {
+            return $"{CodColigada}$_${IdTurmaDisc}";
+        }
     }
 }

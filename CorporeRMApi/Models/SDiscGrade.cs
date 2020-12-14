@@ -101,7 +101,7 @@ namespace CorporeRMApi.Models
         [Display(Name = "Sistema de Avaliação")]
         public string Avaliacao { get; set; }
         [Display(Name = "Bibliografia Básica")]
-        public string BibBasica { get; set; }
+        public string BibiBasica { get; set; }
         [Display(Name = "Bibliografia Complementar")]
         public string BibliCompl { get; set; }
         public string OL { get; set; }

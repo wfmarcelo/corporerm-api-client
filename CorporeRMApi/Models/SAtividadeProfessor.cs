@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using Uniarp.Util;
 
 namespace CorporeRMApi.Models
 {
     public class SAtividadeProfessor
     {
-        
+
         public string Id { get; set; }
         [Required]
         public short CodColigada { get; set; }
@@ -18,7 +20,7 @@ namespace CorporeRMApi.Models
         [Display(Name = "Descrição")]
         public string Descricao { get; set; }
         public string Instituicao { get; set; }
-        [Display(Name = "Carga Horária")]
+        [Display(Name = "Carga horária")]
         public decimal? CargaHoraria { get; set; }
         public int? EquivHoraAula { get; set; }
         [Display(Name = "Observação")]
@@ -34,10 +36,11 @@ namespace CorporeRMApi.Models
         public string Coordenador { get; set; }
         public string Ano { get; set; }
         public string TipoAtividade { get; set; }
+        [Display(Name = "Valor hora")]
         public decimal? ValorHora { get; set; }
-        [Display(Name = "Data Inicial")]
+        [Display(Name = "Data inicial")]
         public DateTime? DtInicio { get; set; }
-        [Display(Name = "Data Final")]
+        [Display(Name = "Data final")]
         public DateTime? DtTermino { get; set; }
         public string CodCCusto { get; set; }
         public string Remunerada { get; set; }
@@ -55,6 +58,39 @@ namespace CorporeRMApi.Models
         public int? CodFilial { get; set; }
         public IList<SHorarioAtivProf> SHorarioAtivProf { get; set; }
         public IList<SAtivColaborador> SAtivColaborador { get; set; }
+
+        public int CargaHorariaCadastrada
+        {
+            get
+            {
+                if (SHorarioAtivProf == null)
+                {
+                    return 0;
+                }
+                
+                if (SHorarioAtivProf.Count == 0)
+                {
+                    return 0;
+                }
+
+                return SHorarioAtivProf.Sum(h => Formater.TimeToInt(h.HoraFim) - Formater.TimeToInt(h.HoraInicio));
+            }
+        }
+
+        public int GetCargaHoraria()
+        {
+            return Formater.TimeToInt(Formater.DecimalToTime((decimal)CargaHoraria));
+        }
+
+        public bool IsEditavel()
+        {
+            return Situacao == "I" ? true : false;
+        }
+
+        public bool IsCargaHorariaPreenchida()
+        {
+            return CargaHorariaCadastrada < CargaHoraria;
+        }
     }
 
     public class SHorarioAtivProf
