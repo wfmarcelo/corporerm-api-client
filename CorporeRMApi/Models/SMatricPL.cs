@@ -38,6 +38,7 @@ namespace CorporeRMApi.Models
         [MaxLength(1)]
         public string CarteiraEmitida { get; set; }
         [MaxLength(120)]
+        [Display(Name = "Aluno")]
         public string NomeAluno { get; set; }
         public DateTime? DtAlteracao { get; set; }
         [MaxLength(20)]
@@ -64,6 +65,7 @@ namespace CorporeRMApi.Models
         public string NomeTipoMat { get; set; }
         public int? CodTurno { get; set; }
         [MaxLength(30)]
+        [Display(Name = "Status")]
         public string NomeStatus { get; set; }
         public string CodCurso { get; set; }
         public string NomeCurso { get; set; }
@@ -73,6 +75,12 @@ namespace CorporeRMApi.Models
         public string DescGrade { get; set; }
 
         public List<SMatricPLCompl> Complementos { get; set; }
+
+
+        public string GetAlunoId()
+        {
+            return $"{CodColigada}$_${RA}";
+        }
     }
 
     public class SMatricPLCompl
