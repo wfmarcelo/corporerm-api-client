@@ -14,7 +14,7 @@ namespace CorporeRMApi.Models
         public string Nacional { get; set; }
         [MaxLength(4)]
         public string CodigoSinief { get; set; }
-        public short IdPais { get; set; }
+        public short? IdPais { get; set; }
         [MaxLength(60)]
         public string Descricao { get; set; }
     }
