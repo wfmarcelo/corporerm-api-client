@@ -81,6 +81,11 @@ namespace CorporeRMApi.Models
         {
             return $"{CodColigada}$_${RA}";
         }
+
+        public string GetHabilitacaoAlunoId()
+        {
+            return $"{CodColigada}$_${IdHabilitacaoFilial}$_${RA}";
+        }
     }
 
     public class SMatricPLCompl

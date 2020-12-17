@@ -13,19 +13,24 @@ namespace CorporeRMApi.Models
         public int IdHabilitacaoFilial { get; set; }
         [Required]
         [MaxLength(20)]
+        [Display(Name = "Registro Acadêmico")]
         public string RA { get; set; }
         public short? CodTipoIngresso { get; set; }
         public int? CodInst { get; set; }
         public int? CodStatus { get; set; }
+        [Display(Name = "Admissão")]
         public DateTime? DtIngresso { get; set; }
+        [Display(Name = "Pontos")]
         public string PontosVestibular { get; set; }
         public string ClassificacaoVestibular { get; set; }
         public decimal? MediaVestibular { get; set; }
+        [Display(Name = "Data da Colação")]
         public DateTime? DtColacaoGrau { get; set; }
         public DateTime? DtEmisDiploma { get; set; }
         public string RegistroConclusao { get; set; }
         public string LivroRegistro { get; set; }
         public string PaginaRegistro { get; set; }
+        [Display(Name = "Data de Conclusão")]
         public DateTime? DtConclusaoCurso { get; set; }
         public decimal? CR { get; set; }
         public decimal? MediaGlobal { get; set; }
@@ -37,19 +42,29 @@ namespace CorporeRMApi.Models
         public int? IdHabilitacaoFilialOrigem { get; set; }
         public short? CodMotivoTransferencia { get; set; }
         public string MotivoTransferencia { get; set; }
+        [Display(Name = "Forma")]
         public string NomeTipoIngresso { get; set; }
         public string NomeInstituicao { get; set; }
         public string NomeStatus { get; set; }
+        [Display(Name = "Matriz Curricular")]
         public string NomeGrade { get; set; }
+        [Display(Name = "Curso")]
         public string NomeCurso { get; set; }
+        [Display(Name = "Habilitação")]
         public string NomeHabilitacao { get; set; }
+        [Display(Name = "Turno")]
         public string NomeTurno { get; set; }
+        [Display(Name = "Nome")]
         public string NomeAluno { get; set; }
         public string CodCurso { get; set; }
+        [Display(Name = "Total de Disciplinas")]
         public int? QtdTotalDiscObr { get; set; }
+        [Display(Name = "Total Cursadas")]
         public int? QtdConcDiscObr { get; set; }
+        [Display(Name = "Total Pendentes")]
         public int? QtdPendDiscObr { get; set; }
         public string TipoContDiscOpt { get; set; }
+        [Display(Name = "Total Optativas")]
         public double? QtdTotalDiscOpt { get; set; }
         public double? QtdConcDiscOpt { get; set; }
         public double? QtdPendDiscOpt { get; set; }
@@ -413,6 +428,7 @@ namespace CorporeRMApi.Models
         public string ConceitoECTS { get; set; }
         public int IdHabFilialAprovEstudos { get; set; }
         public int IdTurmaDisc { get; set; }
+        [Display(Name = "Situação")]
         public string NomeStatus { get; set; }
         public object Image { get; set; }
         public string Disciplina { get; set; }   
