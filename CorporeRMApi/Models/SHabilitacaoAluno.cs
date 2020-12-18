@@ -142,6 +142,7 @@ namespace CorporeRMApi.Models
         public string CodDisc { get; set; }
         public string Disciplina { get; set; }
         public string Status { get; set; }
+        [Display(Name = "Créditos")]
         public decimal? NumCreditos { get; set; }
         public decimal? CH { get; set; }
         public decimal? Nota { get; set; }
