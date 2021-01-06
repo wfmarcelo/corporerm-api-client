@@ -16,8 +16,10 @@ namespace CorporeRMApi.Models
         public int IdPerLet { get; set; }
         [Required]
         public int IdHabilitacaoFilial { get; set; }
+        [Display(Name = "Instituição")]
         public int? CodInst { get; set; }
         [Required]
+        [Display(Name = "Situação")]
         public int CodStatus { get; set; }
         [Display(Name = "Carga Horária")]
         public decimal? CargaHoraria { get; set; }

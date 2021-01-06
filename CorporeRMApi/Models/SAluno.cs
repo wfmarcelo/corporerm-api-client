@@ -15,6 +15,7 @@ namespace CorporeRMApi.Models
         [MaxLength(120)]
         public string Nome { get; set; }
         [Required]
+        [Display(Name = "Data Nascimento")]
         public DateTime DtNascimento { get; set; }
         [Required]
         public int CodTipoCurso { get; set; }
