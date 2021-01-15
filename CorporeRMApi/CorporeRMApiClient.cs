@@ -88,7 +88,7 @@ namespace CorporeRMApi
 
             AddAuthorization(model.GetAuthenticationHeader());
 
-            var response = await _httpClient.GetAsync("RMSRestDataServer/service/educacional");
+            var response = await _httpClient.GetAsync("RMSRestDataServer/getavailableservices");
 
             return new AuthResult
             {
