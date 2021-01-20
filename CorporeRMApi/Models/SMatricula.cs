@@ -63,6 +63,11 @@ namespace CorporeRMApi.Models
         public DateTime? RecModifiedOn { get; set; }
         public string MatriculaIsolada { get; set; }
 
+        public string GetMatricPLId()
+        {
+            return $"{CodColigada}$_${IdPerLet}$_${IdHabilitacaoFilial}$_${RA}";
+        }
+
         public override bool Equals(object obj)
         {
             var matricula = obj as SMatricula;
