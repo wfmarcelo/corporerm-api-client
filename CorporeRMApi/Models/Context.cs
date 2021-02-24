@@ -1,10 +1,10 @@
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace CorporeRMApi.Models
 {
     public class Context
     {
-        [JsonProperty("$id")]
+        [JsonPropertyName("$id")]
         public string Id { get; set; }
         public Params _params { get; set; }
         public int Environment { get; set; }
@@ -12,31 +12,31 @@ namespace CorporeRMApi.Models
 
     public class Params
     {
-        [JsonProperty("$EXERCICIOFISCAL")]
+        [JsonPropertyName("$EXERCICIOFISCAL")]
         public int ExercicioFiscal { get; set; } = 1;
-        [JsonProperty("$CODLOCPRT")]
+        [JsonPropertyName("$CODLOCPRT")]
         public int CodLocPrt { get; set; } = -1;
-        [JsonProperty("$CODTIPOCURSO")]
+        [JsonPropertyName("$CODTIPOCURSO")]
         public short CodTipoCurso { get; set; } = 1;
-        [JsonProperty("$EDUTIPOUSR")]
+        [JsonPropertyName("$EDUTIPOUSR")]
         public string EduTipoUsr { get; set; } = "-1";
-        [JsonProperty("$CODUNIDADEBIB")]
+        [JsonPropertyName("$CODUNIDADEBIB")]
         public int CodUnidadeBib { get; set; } = -1;
-        [JsonProperty("$CODCOLIGADA")]
+        [JsonPropertyName("$CODCOLIGADA")]
         public short CodColigada { get; set; } = 1;
-        [JsonProperty("$RHTIPOUSR")]
+        [JsonPropertyName("$RHTIPOUSR")]
         public string RHTipoUsr { get; set; } = "-1";
-        [JsonProperty("$CODIGOEXTERNO")]
+        [JsonPropertyName("$CODIGOEXTERNO")]
         public string CodigoExterno { get; set; } = "-1";
-        [JsonProperty("$CODSISTEMA")]
+        [JsonPropertyName("$CODSISTEMA")]
         public string CodSistema { get; set; } = "G";
-        [JsonProperty("$CODUSUARIOSERVICO")]
+        [JsonPropertyName("$CODUSUARIOSERVICO")]
         public string CodUsuarioServico { get; set; } = "";
-        [JsonProperty("$IDPRJ")]
+        [JsonPropertyName("$IDPRJ")]
         public int IdPrj { get; set; } = -1;
-        [JsonProperty("$CHAPAFUNCIONARIO")]
+        [JsonPropertyName("$CHAPAFUNCIONARIO")]
         public string ChapaFuncionario { get; set; } = "-1";
-        [JsonProperty("$CODFILIAL")]
+        [JsonPropertyName("$CODFILIAL")]
         public int CodFilial { get; set; } = 1;
     }
 }
