@@ -91,6 +91,30 @@ namespace CorporeRMApi.Models.Educacional
         {
             return CargaHorariaCadastrada < CargaHoraria;
         }
+
+        public static IList<SHorarioAtivProf> GetChoqueAtividade(IList<SHorarioAtivProf> SHorarioAtivProf, DateTime dataInicial, DateTime dataFinal, int HoraInicio, int HoraFim, int diaSemana)
+        {
+            if (SHorarioAtivProf == null)
+            {
+                return new List<SHorarioAtivProf>();
+            }
+
+            
+            return SHorarioAtivProf
+                            .Where(h =>
+                                (
+                                    ((dataInicial.Date >= ((DateTime)h.DataInicio).Date && dataInicial.Date <= ((DateTime)h.DataFim).Date) ||
+                                    (dataFinal.Date >= ((DateTime)h.DataInicio).Date && dataFinal.Date <= ((DateTime)h.DataFim).Date)) ||
+                                    ((dataInicial.Date <= ((DateTime)h.DataInicio).Date && dataInicial.Date >= ((DateTime)h.DataFim).Date) ||
+                                    (dataFinal.Date <= ((DateTime)h.DataInicio).Date && dataFinal.Date >= ((DateTime)h.DataFim).Date)) ||
+                                    ((dataInicial.Date <= ((DateTime)h.DataInicio).Date && dataFinal.Date >= ((DateTime)h.DataFim).Date) ||
+                                    (dataFinal.Date <= ((DateTime)h.DataInicio).Date && dataInicial.Date >= ((DateTime)h.DataFim).Date))
+                                    )
+                                &&
+                                (HoraInicio >= Formater.TimeToInt(h.HoraInicio) && HoraFim < Formater.TimeToInt(h.HoraFim) ||
+                                (HoraFim > Formater.TimeToInt(h.HoraInicio) && HoraFim <= Formater.TimeToInt(h.HoraFim)))
+                                && h.DiaSemana == diaSemana.ToString()).Distinct().ToList();
+        }
     }
 
     public class SHorarioAtivProf

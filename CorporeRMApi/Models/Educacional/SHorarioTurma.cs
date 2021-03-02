@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using Uniarp.Util;
 
 namespace CorporeRMApi.Models.Educacional
 {
@@ -103,6 +106,29 @@ namespace CorporeRMApi.Models.Educacional
             hash.Add(Espelho);
             hash.Add(CodTipoCurso);
             return hash.ToHashCode();
+        }
+
+        public static IList<SHorarioTurma> GetChoqueHorario(IList<SHorarioTurma> horarios, DateTime dataInicial, DateTime dataFinal, int horaInicial, int horaFinal, int diaSemana)
+        {
+            if (horarios == null)
+            {
+                return new List<SHorarioTurma>();
+            }
+
+            return horarios
+                    .Where(h =>
+                        (
+                        ((dataInicial.Date >= ((DateTime)h.DataInicial).Date && dataInicial.Date <= ((DateTime)h.DataFinal).Date) ||
+                        (dataFinal.Date >= ((DateTime)h.DataInicial).Date && dataFinal.Date <= ((DateTime)h.DataFinal).Date)) ||
+                        ((dataInicial.Date <= ((DateTime)h.DataInicial).Date && dataInicial.Date >= ((DateTime)h.DataFinal).Date) ||
+                        (dataFinal.Date <= ((DateTime)h.DataInicial).Date && dataFinal.Date >= ((DateTime)h.DataFinal).Date)) ||
+                        ((dataInicial.Date <= ((DateTime)h.DataInicial).Date && dataFinal.Date >= ((DateTime)h.DataFinal).Date) ||
+                        (dataFinal.Date <= ((DateTime)h.DataInicial).Date && dataInicial.Date >= ((DateTime)h.DataFinal).Date))
+                        )
+                        &&
+                        (horaInicial >= Formater.TimeToInt(h.HoraInicial) && horaFinal < Formater.TimeToInt(h.HoraFinal) ||
+                        (horaFinal > Formater.TimeToInt(h.HoraInicial) && horaFinal <= Formater.TimeToInt(h.HoraFinal)))
+                        && h.DiaSemana == diaSemana).Distinct().ToList();
         }
     }
 }
