@@ -114,6 +114,7 @@ namespace CorporeRMApi.Models.Educacional
         public int? NumMaxAlunoOutraColigada { get; set; }
         public string CodPerLet { get; set; }
         public int? CodPeriodo { get; set; }
+        public string DescGrade { get; set; }
 
         public IList<STurmaDiscCompl> STurmaDiscCompl { get; set; }
 

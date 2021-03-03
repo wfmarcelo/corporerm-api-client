@@ -13,7 +13,7 @@ namespace CorporeRMApi.Models.Educacional
         [MaxLength(10)]
         public string CodCurso { get; set; }
         [Required]
-        public int CodTipoCurso { get; set; }
+        public short CodTipoCurso { get; set; }
         [MaxLength(500)]
         public string Nome { get; set; }
         public IList<SCursoCompl> SCursoCompl { get; set; }
