@@ -38,5 +38,7 @@ namespace CorporeRMApi.Models
         public string ChapaFuncionario { get; set; } = "-1";
         [JsonPropertyName("$CODFILIAL")]
         public int CodFilial { get; set; } = 1;
+        [JsonPropertyName("$CODUSUARIO")]
+        public string CodUsuario { get; set; }
     }
 }
