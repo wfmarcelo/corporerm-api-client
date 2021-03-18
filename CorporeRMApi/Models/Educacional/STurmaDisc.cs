@@ -170,6 +170,11 @@ namespace CorporeRMApi.Models.Educacional
         {
             return $"{CodColigada}$_${CodDisc}";
         }
+        
+        public string GetPeriodoLetivoId()
+        {
+            return $"{CodColigada}$_${IdPerLet}";
+        }
 
         public IList<object> GetPrimaryKeyList()
         {

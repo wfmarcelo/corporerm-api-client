@@ -16,7 +16,7 @@ namespace CorporeRMApi.Models.Educacional
         public string CodProf { get; set; }
         [MaxLength(45)]
         public string Nome { get; set; }
-        public string IdTurmaDisc { get; set; }
+        public int IdTurmaDisc { get; set; }
         public string DesconsideraPonto { get; set; }
         public int? CodHor { get; set; }
         public DateTime? DataInicial { get; set; }

@@ -16,5 +16,6 @@ namespace CorporeRMApi.Models.Educacional.ConsultaSql
         public string TurmaDisciplinaId { get; set; }
         public string NomeDisciplina { get; set; }
         public string StatusDisciplina { get; set; }
+        public int IdTurmaDisc { get; set; }
     } 
 }
