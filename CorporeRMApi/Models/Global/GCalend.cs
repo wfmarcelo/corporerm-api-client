@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace CorporeRMApi.Models.Global
 {
@@ -30,6 +31,16 @@ namespace CorporeRMApi.Models.Global
         public override int GetHashCode()
         {
             return HashCode.Combine(Id, Codigo, Nome, GFeriado);
+        }
+
+        public static GFeriado GetChoqueFeriado(GCalend calendario, DateTime data, int horaInicio, int horaFinal)
+        {
+            return calendario.GFeriado
+                .Where(f => 
+                    f.DiaFeriado == data
+                    && f.HoraInicio <= horaInicio
+                    && f.HoraFinal >= horaFinal
+                    ).SingleOrDefault();
         }
     }
 

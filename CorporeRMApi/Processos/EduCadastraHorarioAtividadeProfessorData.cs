@@ -24,7 +24,8 @@ namespace CorporeRMApi.Processos
             _atividadeProfessorData.SetContexto(contexto);
         }
 
-        public async Task<EduProcessaHorarioAtividadeProfessor> Processar(EduProcessaHorarioAtividadeProfessorParams parametros)
+        public async Task<EduProcessaHorarioAtividadeProfessor> Processar(
+            EduProcessaHorarioAtividadeProfessorParams parametros)
         {
             var choquesHorarioProfessor = new List<SHorarioTurma>();
             var choquesHorarioAtividadeProfessor = new List<SHorarioAtivProf>();
