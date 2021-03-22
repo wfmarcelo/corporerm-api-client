@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using CorporeRMApi.Models.Global;
 
@@ -15,16 +16,19 @@ namespace CorporeRMApi.Models.Educacional
         public IList<STurmaDisc> DisciplinasTurma { get; set; }
         public IList<STurmaDisc> DisciplinasProfessores { get; set; }
         public IList<SProfessorTurma> TurmasProfessores { get; set; }
-        public IList<SHorarioTurma> HorariosInclusao { get; set; }
-        public IList<SProfessorTurma> ProfessoresInclusao { get; set; }
+        public IList<Horario> HorariosInclusao { get; set; }
+        public IList<ProfessorTurma> ProfessoresInclusao { get; set; }
+        [Display(Name = "CH processada")]
         public decimal CHProcessada { get; set; }
+        [Display(Name = "CH disciplina")]
         public decimal CHDisciplina { get; set; }
+        [Display(Name = "CH cadastrada")]
         public decimal CHCadastrada { get; set; }
         public string NomeDisciplina { get; set; }
         public bool ExisteChoque { get; set; }
         public bool IsCHIncompleta { get; set; }
-        public string IdTurmaDisciplina { get; set; }
-        public short CodColigada { get; set; }
+        public STurmaDisc STurmaDisc { get; set; }
+        [Display(Name = "Total dias")]
         public int TotalDias
         {
             get
@@ -37,6 +41,7 @@ namespace CorporeRMApi.Models.Educacional
                 return HorariosInclusao.Select(m => m.DataInicial).Distinct().ToList().Count;
             }
         }
+        [Display(Name = "Total aulas")]
         public int TotalAulas
         {
             get

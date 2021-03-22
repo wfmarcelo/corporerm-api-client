@@ -92,6 +92,7 @@ namespace CorporeRMApi
         public async Task ExecuteProcessAsync(object model, string processName)
         {
             AddAuthorization();
+            _httpClient.MaxResponseContentBufferSize = 2147483647;
             var response = await _httpClient.PostAsJsonAsync($"rest/restprocess/executeprocess/{processName}", model);
             await response.EnsureSuccessStatusCodeAsync();
 

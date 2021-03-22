@@ -95,7 +95,7 @@ namespace CorporeRMApi.Processes
             var choquesHorarioTurma = new List<SHorarioTurma>();
             var choquesHorarioProfessor = new List<SHorarioTurma>();
             var choquesHorarioAtividadeProfessor = new List<SHorarioAtivProf>();
-            var horariosTurma = new List<SHorarioTurma>();
+            var horariosTurma = new List<Horario>();
             bool existeChoque = false;
 
             while (data <= parametros.STurmaDisc.DtFinal)
@@ -166,16 +166,17 @@ namespace CorporeRMApi.Processes
 
                         if (contadorAula <= parametros.SDisciplina.CH)
                         {
-                            horariosTurma.Add(new SHorarioTurma
+                            horariosTurma.Add(new Horario
                             {
                                 CodColigada = horario.CodColigada,
                                 CodHor = horario.CodHor,
-                                IdTurmaDisc = parametros.STurmaDisc.IdTurmaDisc,
                                 DataInicial = data,
                                 DataFinal = data,
                                 HoraInicial = horario.HoraInicial,
                                 HoraFinal = horario.HoraFinal,
-                                DiaSemana = (short)horario.DiaSemana
+                                DiaSemana = (short)horario.DiaSemana,
+                                ListaProfessorTurma = parametros.Professores
+                                
                             });
                         }
                     }
@@ -225,8 +226,7 @@ namespace CorporeRMApi.Processes
                 NomeDisciplina = parametros.SDisciplina.Nome,
                 ExisteChoque = existeChoque,
                 IsCHIncompleta = isCHIncompleta,
-                IdTurmaDisciplina = parametros.STurmaDisc.Id,
-                CodColigada = parametros.STurmaDisc.CodColigada
+                STurmaDisc = parametros.STurmaDisc
             };
         }
 

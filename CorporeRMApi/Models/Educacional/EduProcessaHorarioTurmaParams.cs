@@ -9,7 +9,7 @@ namespace CorporeRMApi.Models.Educacional
     {
         public EduProcessaHorarioTurmaParams(
             IList<SHorario> horarios,
-            IList<SProfessorTurma> professores,
+            IList<ProfessorTurma> professores,
             STurmaDisc sTurmaDisc,
             SDisciplina sDisciplina,
             Recorrencia recorrencia,
@@ -25,7 +25,7 @@ namespace CorporeRMApi.Models.Educacional
         }
           
          public IList<SHorario> Horarios { get; set; }
-         public IList<SProfessorTurma> Professores { get; set; }
+         public IList<ProfessorTurma> Professores { get; set; }
          public STurmaDisc STurmaDisc { get; set; }
          public SDisciplina SDisciplina { get; set; }
          public Recorrencia Recorrencia { get; set; }

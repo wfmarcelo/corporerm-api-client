@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace CorporeRMApi.Models.Educacional
 {
@@ -8,6 +9,7 @@ namespace CorporeRMApi.Models.Educacional
         public short CodColigada { get; set; }
         public int? CodFilial { get; set; }
         public int? CodTipoCurso { get; set; }
+        public int IdTurmaDisc { get; set; }
         public IList<Horario> ListaHorarios { get; set; }
         public bool PermitirSuperAlocarSala { get; set; }
         public bool RespeitaPeriodoProf { get; set; }
@@ -30,14 +32,19 @@ namespace CorporeRMApi.Models.Educacional
         public string Predio { get; set; }
         public string Bloco { get; set; }
         public string Sala { get; set; }
+        [Display(Name = "Data Inicial")]
         public DateTime DataInicial { get; set; }
+        [Display(Name = "Data final")]
         public DateTime DataFinal { get; set; }
         public string CodSubTurma { get; set; }
         public short CodColigada { get; set; }
         public int CodHor { get; set; }
         public int CodTurno { get; set; }
+        [Display(Name = "Dia semana")]
         public int DiaSemana { get; set; }
+        [Display(Name = "Hora inicial")]
         public string HoraInicial { get; set; }
+        [Display(Name = "Hora final")]
         public string HoraFinal { get; set; }
         public string Aula { get; set; }
         public string Classificacao { get; set; }
@@ -55,7 +62,8 @@ namespace CorporeRMApi.Models.Educacional
         public string CodUsuario { get; set; }
         public string UserID { get; set; }
         public string Email { get; set; }
-        public string Nomeprof { get; set; }
+        [Display(Name = "Nome")]
+        public string NomeProf { get; set; }
         public int IdTurmaDisc { get; set; }
         public int IdTurmaDiscAntigo { get; set; }
         public DateTime? DtInicio { get; set; }
@@ -64,6 +72,7 @@ namespace CorporeRMApi.Models.Educacional
         public DateTime? DtFim { get; set; }
         public decimal? ValorFixo { get; set; }
         public decimal PercentFaturamento { get; set; }
+        [Display(Name = "Tipo")]
         public string TipoProf { get; set; }
         public string DesconsideraPonto { get; set; }
         public bool CompoeSalario { get; set; }

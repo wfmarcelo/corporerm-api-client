@@ -13,27 +13,34 @@ namespace CorporeRMApi.Processes
         }
 
         public EduGeraHorarioTurma GetModel(
-            STurmaDisc turmaDisc, 
-            IList<Horario> horarios, 
-            Context contexto,
-            bool permitirSuperAlocarSala = false,
-            bool respeitaPeriodoProf = false,
-            bool geraPorRecorrencia = true,
-            bool permiteSuperAlocarProfessores = false)
+            EduProcessaHorarioTurma parametros)
         {
             return new EduGeraHorarioTurma
             {
-                CodColigada = turmaDisc.CodColigada,
-                CodFilial = turmaDisc.CodFilial,
-                CodTipoCurso = turmaDisc.CodTipoCurso,
-                ListaHorarios = horarios,
-                Context = contexto,
-                PrimaryKeyList = new List<object>{ turmaDisc.GetPrimaryKeyList() },
-                PrimaryKeyNames = turmaDisc.GetPrimaryKeyNames(),
-                PermitirSuperAlocarProfessores = permiteSuperAlocarProfessores,
-                RespeitaPeriodoProf = respeitaPeriodoProf,
-                GeraPorRecorrencia = geraPorRecorrencia,
-                PermitirSuperAlocarSala = permitirSuperAlocarSala,
+                CodColigada = parametros.STurmaDisc.CodColigada,
+                CodFilial = parametros.STurmaDisc.CodFilial,
+                CodTipoCurso = parametros.STurmaDisc.CodTipoCurso,
+                IdTurmaDisc = parametros.STurmaDisc.IdTurmaDisc,
+                ListaHorarios = parametros.HorariosInclusao,
+                Context = new Context()
+                    {
+                        Id = "1",
+                        Environment = 1,
+                        _params =
+                            new Params
+                            {
+                                CodColigada = parametros.STurmaDisc.CodColigada,
+                                CodTipoCurso = (short)parametros.STurmaDisc.CodTipoCurso,
+                                CodSistema = "S",
+                                CodFilial = parametros.STurmaDisc.CodFilial
+                            }
+                    },
+                PrimaryKeyList = new List<object>{ parametros.STurmaDisc.GetPrimaryKeyList() },
+                PrimaryKeyNames = parametros.STurmaDisc.GetPrimaryKeyNames(),
+                PermitirSuperAlocarProfessores = false,
+                RespeitaPeriodoProf = false,
+                GeraPorRecorrencia = true,
+                PermitirSuperAlocarSala = false,
                 ActionName = "EduGeraHorarioTurmaAction",
                 ActionModule = "S"
             };
