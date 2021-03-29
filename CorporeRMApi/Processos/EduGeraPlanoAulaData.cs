@@ -37,7 +37,7 @@ namespace CorporeRMApi.Processes
                 UsaDataInicialTurma = true,
                 UsaDataFinalTurma = true,
                 ConsiderarRecesso = true,
-                RegerarPlanoAula = true,
+                RegeraPlanoAula = true,
                 PrimaryKeyList = new List<object>{ turmaDisc.GetPrimaryKeyList() },
                 PrimaryKeyNames = turmaDisc.GetPrimaryKeyNames(),
                 ListaTipoFeriado = new List<string> { "AC", "ES", "MU", "NA", "PF" }

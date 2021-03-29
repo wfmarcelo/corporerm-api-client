@@ -97,6 +97,7 @@ namespace CorporeRMApi.Processes
             var choquesHorarioAtividadeProfessor = new List<SHorarioAtivProf>();
             var horariosTurma = new List<Horario>();
             bool existeChoque = false;
+            bool isFeriado = false;
 
             while (data <= parametros.STurmaDisc.DtFinal)
             {
@@ -144,9 +145,12 @@ namespace CorporeRMApi.Processes
                         var feriado = GCalend.GetChoqueFeriado(calendario, data, horaInicial, horaFinal);
                         if (feriado != null)
                         {
+                            isFeriado = true;
                             choquesFeriado.Add(feriado);
                             existeChoque = true;
                             continue;
+                        } else {
+                            isFeriado = false;
                         }
 
 
@@ -186,7 +190,7 @@ namespace CorporeRMApi.Processes
                 {
                     if ((int)data.DayOfWeek == 6)
                     {
-                        if (parametros.Recorrencia == Recorrencia.Quinzenal)
+                        if (parametros.Recorrencia == Recorrencia.Quinzenal && isFeriado == false)
                         {
                             data = data.AddDays(7);
                         }
@@ -246,7 +250,7 @@ namespace CorporeRMApi.Processes
             return result;
         }
 
-        public async Task<IList<STurmaDisc>> GetDisciplinasTurmaAsync(IList<int> idsTurmaDisciplina)
+        private async Task<IList<STurmaDisc>> GetDisciplinasTurmaAsync(IList<int> idsTurmaDisciplina)
         {
             if (idsTurmaDisciplina.Count == 0)
             {
@@ -257,7 +261,7 @@ namespace CorporeRMApi.Processes
             return await _turmaDiscData.GetAllAsync(filter: filtro);
         }
 
-        public async Task<IList<SAtividadeProfessor>> GetAtividadesAsync(IList<string> codigosProf, DateTime dataIncial, DateTime dataFinal)
+        private async Task<IList<SAtividadeProfessor>> GetAtividadesAsync(IList<string> codigosProf, DateTime dataIncial, DateTime dataFinal)
         {
             var codigos = codigosProf.Select(p => $"'{p}'").ToList();
             var filtro = $"[\"SAtividadeProfessor.CodProf in ({string.Join(',', codigos)}) " +
@@ -273,7 +277,7 @@ namespace CorporeRMApi.Processes
             return result;
         }
 
-        public async Task<IList<SAtividadeProfessor>> GetAtividadesAsync(IList<SAtividadeProfessor> atividades)
+        private async Task<IList<SAtividadeProfessor>> GetAtividadesAsync(IList<SAtividadeProfessor> atividades)
         {
             var atividadesRetorno = new List<SAtividadeProfessor>();
 
@@ -297,7 +301,7 @@ namespace CorporeRMApi.Processes
             return atividadesRetorno;
         }
 
-        public async Task<IList<SHorarioTurma>> GetHorariosDisciplinasAsync(IList<int> idsTurmaDisc)
+        private async Task<IList<SHorarioTurma>> GetHorariosDisciplinasAsync(IList<int> idsTurmaDisc)
         {
             if (idsTurmaDisc.Count == 0)
             {
@@ -308,13 +312,13 @@ namespace CorporeRMApi.Processes
             return await _horarioTurmaData.GetAllAsync(filter: filtro);
         }
 
-        public async Task<IList<STurmaDisc>> GetDisciplinasTurmaAsync(int idPerLet, string codTurma)
+        private async Task<IList<STurmaDisc>> GetDisciplinasTurmaAsync(int idPerLet, string codTurma)
         {
             var filtro = $"[\"STurmaDisc.IdPerLet = {idPerLet} AND STurmaDisc.CodTurma = '{codTurma}' \"]";
             return await _turmaDiscData.GetAllAsync(filter: filtro);
         }
 
-        public async Task<IList<SHorarioTurma>> GetHorariosDisciplinaAsync(int idTurmaDisc)
+        private async Task<IList<SHorarioTurma>> GetHorariosDisciplinaAsync(int idTurmaDisc)
         {
             var filtro = $"[\"SHorarioTurma.IdTurmaDisc = ${idTurmaDisc} \"]";
             return await _horarioTurmaData.GetAllAsync(filter: filtro);

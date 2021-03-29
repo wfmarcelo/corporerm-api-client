@@ -12,7 +12,7 @@ namespace CorporeRMApi.Models.Educacional
         public DateTime? DataInicial { get; set; }
         public DateTime? DataFinal { get; set; }
         public bool NaoUltrapassaCargaHoraria { get; set; }
-        public bool RegerarPlanoAula { get; set; }
+        public bool RegeraPlanoAula { get; set; }
         public bool UsaDataInicialTurma { get; set; }
         public bool UsaDataFinalTurma { get; set; }
         public bool UsaDataInicialPL { get; set; }

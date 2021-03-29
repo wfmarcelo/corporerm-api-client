@@ -45,7 +45,7 @@ namespace CorporeRMApi.Models.Educacional
         public string CodBloco { get; set; }
         public string FrequenciaDispWeb { get; set; }
         [Display(Name = "Dia")]
-        public string DiaSemana { get; set; }
+        public int DiaSemana { get; set; }
         public string CodSubTurma { get; set; }
         public string LicaoCasa { get; set; }
         public string Observacao { get; set; }
