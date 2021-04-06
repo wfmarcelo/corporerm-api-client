@@ -25,8 +25,10 @@ namespace CorporeRMApi.Models.Educacional
         public string TipoProf { get; set; }
         public int IdTurmaDisc { get; set; }
         [Display(Name = "Data Inicial")]
+        [DataType(DataType.Date)]
         public DateTime DtInicio { get; set; }
         [Display(Name = "Data Final")]
+        [DataType(DataType.Date)]
         public DateTime? DtFim { get; set; }
         public string CodUsuario { get; set; }
 

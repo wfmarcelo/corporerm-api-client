@@ -47,8 +47,10 @@ namespace CorporeRMApi.Models.Educacional
         public int? MaxAlunos { get; set; }
         public short? CodTipoCurso { get; set; }
         [Display(Name = "Data Inicial")]
+        [DataType(DataType.Date)]
         public DateTime? DtInicial { get; set; }
         [Display(Name = "Data Final")]
+        [DataType(DataType.Date)]
         public DateTime? DtFinal { get; set; }
         public int? MinAlunos { get; set; }
         public decimal? CustoMedio { get; set; }
