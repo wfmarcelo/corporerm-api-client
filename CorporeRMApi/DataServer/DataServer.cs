@@ -21,32 +21,32 @@ namespace CorporeRMApi.DataServer
             _api.SetAuthorization(auth);
         }
 
-        public virtual async Task<T> CreateAsync(object model)
+        public virtual async Task<DataServerResult<T>> CreateAsync(object model)
         {
             return await _api.CreateAsync<T>(model, _dataServerName);
         }
 
-        public virtual async Task<T> DeleteAsync(string id)
+        public virtual async Task<DataServerResult<T>> DeleteAsync(string id)
         {
             return await _api.DeleteAsync<T>(id, _dataServerName);
         }
 
-        public virtual async Task<IList<T>> GetAllAsync(int start = 0, int limit = 0, string filter = null)
+        public virtual async Task<DataServerResult<IList<T>>> GetAllAsync(IList<string> filter, int start = 0, int limit = 0)
         {
             return await _api.GetAllAsync<IList<T>>(start, limit, filter, _dataServerName);
         }
 
-        public virtual async Task<T> GetAsync(string id)
+        public virtual async Task<DataServerResult<T>> GetAsync(string id)
         {
             return await _api.GetAsync<T>(id, _dataServerName);
         }
 
-        public virtual async Task<T> UpdateAsync(string id, object model)
+        public virtual async Task<DataServerResult<T>> UpdateAsync(string id, object model)
         {
             return await _api.PutAsync<T>(id, model, _dataServerName);
         }
 
-        public virtual async Task<T> UpdatePartialAsync(string id, object model)
+        public virtual async Task<DataServerResult<T>> UpdatePartialAsync(string id, object model)
         {
             return await _api.PatchAsync<T>(id, model, _dataServerName);
         }

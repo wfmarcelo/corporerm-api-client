@@ -68,6 +68,7 @@ namespace CorporeRMApi.Models.Educacional
         [Display(Name = "Status")]
         public string NomeStatus { get; set; }
         public string CodCurso { get; set; }
+        [Display(Name = "Curso")]
         public string NomeCurso { get; set; }
         public string CodHabilitacao { get; set; }
         public string NomeHabilitacao { get; set; }

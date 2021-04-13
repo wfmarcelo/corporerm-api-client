@@ -53,7 +53,7 @@ namespace CorporeRMApi.Processes
         {
 
             var periodoLetivo = await _periodoLetivoData.GetAsync(parametros.STurmaDisc.GetPeriodoLetivoId());
-            var calendario = await _calendarioData.GetAsync(periodoLetivo.Calendario);
+            var calendario = await _calendarioData.GetAsync(periodoLetivo.Data.Calendario);
 
             var turmasProfessores =
                 await GetProfessoresAsync(
@@ -142,7 +142,7 @@ namespace CorporeRMApi.Processes
                         }
 
 
-                        var feriado = GCalend.GetChoqueFeriado(calendario, data, horaInicial, horaFinal);
+                        var feriado = GCalend.GetChoqueFeriado(calendario.Data, data, horaInicial, horaFinal);
                         if (feriado != null)
                         {
                             isFeriado = true;
@@ -237,9 +237,12 @@ namespace CorporeRMApi.Processes
         public async Task<IList<SProfessorTurma>> GetProfessoresAsync(IList<string> codigosProf, DateTime dataIncial, DateTime dataFinal)
         {
             var codigos = codigosProf.Select(c => $"'{c}'").ToList();
-            var filtro = $"[\"SProfessorTurma.CodProf in ({string.Join(',', codigos)}) " +
-                        $"AND (SPROFESSORTURMA.DTINICIO BETWEEN '{dataIncial.ToString("s")}' AND '{dataFinal.ToString("s")}' " +
-                        $"OR SPROFESSORTURMA.DTFIM BETWEEN '{dataIncial.ToString("s")}' AND '{dataFinal.ToString("s")}') \"]";
+            var filtro = new List<string>{
+                $"SProfessorTurma.CodProf in ({string.Join(',', codigos)}) " +
+                $"AND (SPROFESSORTURMA.DTINICIO BETWEEN '{dataIncial.ToString("s")}' AND '{dataFinal.ToString("s")}' " +
+                $"OR SPROFESSORTURMA.DTFIM BETWEEN '{dataIncial.ToString("s")}' AND '{dataFinal.ToString("s")}')"
+            };
+                    
             var result = await _professorTurmaData.GetAllAsync(filter: filtro);
 
             if (result == null)
@@ -247,7 +250,7 @@ namespace CorporeRMApi.Processes
                 return new List<SProfessorTurma>();
             }
             
-            return result;
+            return result.Data;
         }
 
         private async Task<IList<STurmaDisc>> GetDisciplinasTurmaAsync(IList<int> idsTurmaDisciplina)
@@ -257,16 +260,23 @@ namespace CorporeRMApi.Processes
                 return new List<STurmaDisc>();
             }
             
-            var filtro = $"[\"STurmaDisc.IdTurmaDisc in ({ string.Join(',', idsTurmaDisciplina)}) \"]";
-            return await _turmaDiscData.GetAllAsync(filter: filtro);
+            var filtro = new List<string>{
+                $"STurmaDisc.IdTurmaDisc in ({ string.Join(',', idsTurmaDisciplina)})"
+            };
+            
+            var turmaDisc = await _turmaDiscData.GetAllAsync(filter: filtro);
+            return turmaDisc.Data;
         }
 
         private async Task<IList<SAtividadeProfessor>> GetAtividadesAsync(IList<string> codigosProf, DateTime dataIncial, DateTime dataFinal)
         {
             var codigos = codigosProf.Select(p => $"'{p}'").ToList();
-            var filtro = $"[\"SAtividadeProfessor.CodProf in ({string.Join(',', codigos)}) " +
-                        $"AND (SAtividadeProfessor.DTINICIO BETWEEN '{dataIncial.ToString("s")}' AND '{dataFinal.ToString("s")}' " +
-                        $"OR SAtividadeProfessor.DTTERMINO BETWEEN '{dataIncial.ToString("s")}' AND '{dataFinal.ToString("s")}') \"]";
+            var filtro = new List<string>{
+                $"SAtividadeProfessor.CodProf in ({string.Join(',', codigos)}) " +
+                $"AND (SAtividadeProfessor.DTINICIO BETWEEN '{dataIncial.ToString("s")}' AND '{dataFinal.ToString("s")}' " +
+                $"OR SAtividadeProfessor.DTTERMINO BETWEEN '{dataIncial.ToString("s")}' AND '{dataFinal.ToString("s")}')"
+            };
+            
             var result = await _atividadeProfessorData.GetAllAsync(filter: filtro);
 
             if (result == null)
@@ -274,7 +284,7 @@ namespace CorporeRMApi.Processes
                 return new List<SAtividadeProfessor>();
             }
             
-            return result;
+            return result.Data;
         }
 
         private async Task<IList<SAtividadeProfessor>> GetAtividadesAsync(IList<SAtividadeProfessor> atividades)
@@ -295,7 +305,7 @@ namespace CorporeRMApi.Processes
                     continue;
                 }
 
-                atividadesRetorno.Add(registro);
+                atividadesRetorno.Add(registro.Data);
             }
 
             return atividadesRetorno;
@@ -308,20 +318,34 @@ namespace CorporeRMApi.Processes
                 return new List<SHorarioTurma>();
             }
             
-            var filtro = $"[\"SHorarioTurma.IdTurmaDisc in ({string.Join(',', idsTurmaDisc)}) \"]";
-            return await _horarioTurmaData.GetAllAsync(filter: filtro);
+            var filtro = new List<string>{
+                $"SHorarioTurma.IdTurmaDisc in ({string.Join(',', idsTurmaDisc)})"
+            };
+            
+            var result = await _horarioTurmaData.GetAllAsync(filter: filtro);
+            
+            return result.Data;
         }
 
         private async Task<IList<STurmaDisc>> GetDisciplinasTurmaAsync(int idPerLet, string codTurma)
         {
-            var filtro = $"[\"STurmaDisc.IdPerLet = {idPerLet} AND STurmaDisc.CodTurma = '{codTurma}' \"]";
-            return await _turmaDiscData.GetAllAsync(filter: filtro);
+            var filtro = new List<string>{
+                $"STurmaDisc.IdPerLet = {idPerLet} AND STurmaDisc.CodTurma = '{codTurma}'"
+            };
+            
+            var result = await _turmaDiscData.GetAllAsync(filter: filtro);
+            return result.Data;
         }
 
         private async Task<IList<SHorarioTurma>> GetHorariosDisciplinaAsync(int idTurmaDisc)
         {
-            var filtro = $"[\"SHorarioTurma.IdTurmaDisc = ${idTurmaDisc} \"]";
-            return await _horarioTurmaData.GetAllAsync(filter: filtro);
+            var filtro = new List<string>{
+                $"SHorarioTurma.IdTurmaDisc = ${idTurmaDisc}"
+            };
+
+            var result = await _horarioTurmaData.GetAllAsync(filter: filtro);
+            
+            return result.Data;
         }
     }
 }

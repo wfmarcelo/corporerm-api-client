@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Uniarp.Extensions;
 
@@ -104,7 +105,7 @@ namespace CorporeRMApi
             return await response.Content.ReadAsJsonAsync<List<Service>>();
         }
 
-        public async Task<T> GetAsync<T>(string id, string dataServerName)
+        public async Task<DataServerResult<T>> GetAsync<T>(string id, string dataServerName)
         {
             AddAuthorization();
             var response = await _httpClient.GetAsync($"RMSRestDataServer/rest/{dataServerName}/{id}");
@@ -112,23 +113,23 @@ namespace CorporeRMApi
 
             var dataServerResult = await response.Content.ReadAsJsonAsync<DataServerResult<T>>();
 
-            return dataServerResult.Data;
+            return dataServerResult;
         }
 
-        public async Task<T> GetAllAsync<T>(int start, int limit, string filter, string dataServerName)
+        public async Task<DataServerResult<T>> GetAllAsync<T>(int start, int limit, IList<string> filter, string dataServerName)
         {
             AddAuthorization();
-            var response = await _httpClient.GetAsync($"RMSRestDataServer/rest/{dataServerName}?start={start}&limit={limit}&filter={filter}");
+            var response = await _httpClient.GetAsync($"RMSRestDataServer/rest/{dataServerName}?start={start}&limit={limit}&filter={JsonSerializer.Serialize(filter)}");
             await response.EnsureSuccessStatusCodeAsync();
 
             var dataServerResult = await response.Content.ReadAsJsonAsync<DataServerResult<T>>();
 
 
 
-            return dataServerResult.Data;
+            return dataServerResult;
         }
 
-        public async Task<T> DeleteAsync<T>(string id, string dataServerName)
+        public async Task<DataServerResult<T>> DeleteAsync<T>(string id, string dataServerName)
         {
             AddAuthorization();
             var response = await _httpClient.DeleteAsync($"RMSRestDataServer/rest/{dataServerName}/{id}");
@@ -136,10 +137,10 @@ namespace CorporeRMApi
 
             var dataServerResult = await response.Content.ReadAsJsonAsync<DataServerResult<T>>();
 
-            return dataServerResult.Data;
+            return dataServerResult;
         }
 
-        public async Task<T> CreateAsync<T>(object model, string dataServerName)
+        public async Task<DataServerResult<T>> CreateAsync<T>(object model, string dataServerName)
         {
             AddAuthorization();
             var response = await _httpClient.PostAsJsonAsync($"RMSRestDataServer/rest/{dataServerName}", model);
@@ -147,10 +148,10 @@ namespace CorporeRMApi
 
             var dataServerResult = await response.Content.ReadAsJsonAsync<DataServerResult<T>>();
 
-            return dataServerResult.Data;
+            return dataServerResult;
         }
 
-        public async Task<T> PutAsync<T>(string id, object model, string dataServerName)
+        public async Task<DataServerResult<T>> PutAsync<T>(string id, object model, string dataServerName)
         {
             AddAuthorization();
             var response = await _httpClient.PutAsJsonAsync($"RMSRestDataServer/rest/{dataServerName}/{id}", model);
@@ -158,10 +159,10 @@ namespace CorporeRMApi
 
             var dataServerResult = await response.Content.ReadAsJsonAsync<DataServerResult<T>>();
 
-            return dataServerResult.Data;
+            return dataServerResult;
         }
 
-        public async Task<T> PatchAsync<T>(string id, object model, string dataServerName)
+        public async Task<DataServerResult<T>> PatchAsync<T>(string id, object model, string dataServerName)
         {
             AddAuthorization();
             var response = await _httpClient.PatchAsJsonAsync($"RMSRestDataServer/rest/{dataServerName}/{id}", model);
@@ -169,7 +170,7 @@ namespace CorporeRMApi
 
             var dataServerResult = await response.Content.ReadAsJsonAsync<DataServerResult<T>>();
 
-            return dataServerResult.Data;
+            return dataServerResult;
         }
 
     }

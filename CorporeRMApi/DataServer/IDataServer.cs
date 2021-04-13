@@ -6,16 +6,16 @@ namespace CorporeRMApi.Data
 {
     public interface IDataServer<T>
     {
-        Task<T> GetAsync(string id);
+        Task<DataServerResult<T>> GetAsync(string id);
 
-        Task<IList<T>> GetAllAsync(int start = 0, int limit = 0, string filter = null);
+        Task<DataServerResult<IList<T>>> GetAllAsync(IList<string> filter, int start = 0, int limit = 0);
 
-        Task<T> CreateAsync(object model);
+        Task<DataServerResult<T>> CreateAsync(object model);
 
-        Task<T> DeleteAsync(string id);
+        Task<DataServerResult<T>> DeleteAsync(string id);
 
-        Task<T> UpdateAsync(string id, object model);
-        Task<T> UpdatePartialAsync(string id, object model);
+        Task<DataServerResult<T>> UpdateAsync(string id, object model);
+        Task<DataServerResult<T>> UpdatePartialAsync(string id, object model);
         void SetAuthorization(string auth);
         void SetContexto(Contexto contexto);
 

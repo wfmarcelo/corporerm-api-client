@@ -39,8 +39,10 @@ namespace CorporeRMApi.Models.Educacional
         [Display(Name = "Valor hora")]
         public decimal? ValorHora { get; set; }
         [Display(Name = "Data inicial")]
+        [DataType(DataType.Date)]
         public DateTime? DtInicio { get; set; }
         [Display(Name = "Data final")]
+        [DataType(DataType.Date)]
         public DateTime? DtTermino { get; set; }
         public string CodCCusto { get; set; }
         public string Remunerada { get; set; }
