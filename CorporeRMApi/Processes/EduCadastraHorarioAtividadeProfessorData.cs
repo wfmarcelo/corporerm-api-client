@@ -52,11 +52,12 @@ namespace CorporeRMApi.Processes
             var choquesHorarioAtividadeProfessor = new List<SHorarioAtivProf>();
             var horariosProcessados = new List<SHorarioAtivProf>();
             bool existeChoque = false;
+            bool isCargaHorariaExcedida = false;
 
             foreach (var horario in horarios)
             {
-                var horaInicial = Formater.TimeToInt(horario.HoraInicial);
-                var horaFinal = Formater.TimeToInt(horario.HoraFinal);
+                var horaInicial = horario.GetHorarioInicialInt();
+                var horaFinal = horario.GetHorarioFinalInt();
 
                 var choqueHorarioProfessor = SHorarioTurma.GetChoqueHorario(horariosTurma, atividadeProfessor.DtInicio.Value, 
                         atividadeProfessor.DtTermino.Value, horaInicial, horaFinal, horario.DiaSemana);
@@ -69,26 +70,27 @@ namespace CorporeRMApi.Processes
                     existeChoque = true;
                     continue;
                 }
-
-                foreach (var atividade in atividadesProfessor)
+    
+                var choqueHorarioAtividadeProfessor = SAtividadeProfessor.GetChoqueAtividade(atividadesProfessor, 
+                        atividadeProfessor.DtInicio.Value, atividadeProfessor.DtTermino.Value, horaInicial, horaFinal, horario.DiaSemana);
+                if (choqueHorarioAtividadeProfessor.Count > 0)
                 {
-                    var atividadeProfessorAtual = await _atividadeProfessorData.GetAsync(atividade.Id);
-                    
-                    var choqueHorarioAtividadeProfessor = SAtividadeProfessor.GetChoqueAtividade(atividadeProfessorAtual.Data.SHorarioAtivProf, 
-                            atividadeProfessor.DtInicio.Value, atividadeProfessor.DtTermino.Value, horaInicial, horaFinal, horario.DiaSemana);
-                    if (choqueHorarioAtividadeProfessor.Count > 0)
+                    foreach (var choque in choqueHorarioAtividadeProfessor)
                     {
-                        foreach (var choque in choqueHorarioAtividadeProfessor)
-                        {
-                            choquesHorarioAtividadeProfessor.Add(choque);
-                        }
-                        existeChoque = true;
-                        continue;
+                        choquesHorarioAtividadeProfessor.Add(choque);
                     }
+                    existeChoque = true;
+                    continue;
+                }
+                
+                var cargaHorariaProcessada = horario.GetCargaHoraria();
+                if (atividadeProfessor.GetCargaHoraria() < cargaHorariaProcessada + atividadeProfessor.CargaHorariaCadastrada)
+                {
+                    isCargaHorariaExcedida = true;
+                    break;
                 }
 
-                horariosProcessados.Add(
-                    new SHorarioAtivProf
+                var horarioProcessado = new SHorarioAtivProf
                     {
                         CodColigada = atividadeProfessor.CodColigada,
                         IdAtividadeProf = atividadeProfessor.IdAtividadeProf,
@@ -99,7 +101,16 @@ namespace CorporeRMApi.Processes
                         HoraInicio = horario.HoraInicial,
                         HoraFim = horario.HoraFinal,
                         DesconsideraPonto = "N"
-                    });
+                    };
+
+                
+                horariosProcessados.Add(horarioProcessado);
+                atividadeProfessor.SHorarioAtivProf.Add(horarioProcessado);
+
+                if (atividadeProfessor.IsCargaHorariaPreenchida())
+                {
+                    break;
+                }
             }
 
             atividadeProfessor.SHorarioAtivProf = horariosProcessados;
@@ -107,6 +118,7 @@ namespace CorporeRMApi.Processes
             return new EduProcessaHorarioAtividadeProfessor
             {
                 ExisteChoque = existeChoque,
+                IsCargaHorariaExcedida = isCargaHorariaExcedida,
                 ChoquesHorarioAtividadeProfessor = choquesHorarioAtividadeProfessor,
                 ChoquesHorarioProfessor = choquesHorarioProfessor,
                 AtividadeProfessor = atividadeProfessor,
@@ -133,8 +145,9 @@ namespace CorporeRMApi.Processes
             return result.Data;
         }
 
-        private async Task<IList<SAtividadeProfessor>> GetAtividadesProfessorAsync(string codProf, DateTime dataInicial, DateTime dataFinal)
+        private async Task<IList<SHorarioAtivProf>> GetAtividadesProfessorAsync(string codProf, DateTime dataInicial, DateTime dataFinal)
         {
+            var atividades = new List<SHorarioAtivProf>();
             var filtro = new List<string>{
                 @"
                     SAtividadeProfessor.CodProf =:CODPROF AND
@@ -149,7 +162,13 @@ namespace CorporeRMApi.Processes
 
             var result = await _atividadeProfessorData.GetAllAsync(filter: filtro);
 
-            return result.Data;
+            foreach (var atividade in result.Data)
+            {
+                var atividadeProfessorAtual = await _atividadeProfessorData.GetAsync(atividade.Id);
+                atividades.AddRange(atividadeProfessorAtual.Data.SHorarioAtivProf);
+            }
+
+            return atividades;
         }
 
         private async Task<IList<SHorarioProfessor>> GetHorariosProfessorAsync(IList<SProfessorTurma> turmasProfessor)
@@ -198,11 +217,24 @@ namespace CorporeRMApi.Processes
 
             foreach (var horario in atividadeProfessor.SHorarioAtivProf)
             {
+                horario.State = 1;
                 atividadeNova.SHorarioAtivProf = new List<SHorarioAtivProf>() { horario };
                 await _atividadeProfessorData.UpdateAsync(atividadeProfessor.Id, atividadeNova);
             }
+
+            await SetSituacao(atividadeProfessor.Id);
+
         }
 
-        
+        private async Task SetSituacao(string id)
+        {
+            var atividade = await _atividadeProfessorData.GetAsync(id);
+
+            if (atividade.Data.IsCargaHorariaPreenchida())
+            {
+                atividade.Data.Situacao = "A";
+                await _atividadeProfessorData.UpdateAsync(id, atividade.Data);
+            }
+        }
     }
 }

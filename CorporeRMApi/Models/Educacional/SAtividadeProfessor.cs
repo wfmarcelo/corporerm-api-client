@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.Json.Serialization;
+using Uniarp.Extensions;
 using Uniarp.Util;
 
 namespace CorporeRMApi.Models.Educacional
@@ -84,6 +86,11 @@ namespace CorporeRMApi.Models.Educacional
             return Formater.TimeToInt(Formater.DecimalToTime((decimal)CargaHoraria));
         }
 
+        public string CargaHorariaStringFormat()
+        {
+            return Formater.DecimalToTime((decimal)CargaHoraria);
+        }
+
         public bool IsEditavel()
         {
             return Situacao == "I" ? true : false;
@@ -91,10 +98,11 @@ namespace CorporeRMApi.Models.Educacional
 
         public bool IsCargaHorariaPreenchida()
         {
-            return CargaHorariaCadastrada < CargaHoraria;
+            var teste = GetCargaHoraria();
+            return CargaHorariaCadastrada >= GetCargaHoraria();
         }
 
-        public static IList<SHorarioAtivProf> GetChoqueAtividade(IList<SHorarioAtivProf> SHorarioAtivProf, DateTime dataInicial, DateTime dataFinal, int HoraInicio, int HoraFim, int diaSemana)
+        public static IList<SHorarioAtivProf> GetChoqueAtividade(IList<SHorarioAtivProf> SHorarioAtivProf, DateTime dataInicial, DateTime dataFinal, int horaInicio, int horaFim, int diaSemana)
         {
             if (SHorarioAtivProf == null)
             {
@@ -113,8 +121,11 @@ namespace CorporeRMApi.Models.Educacional
                                     (dataFinal.Date <= ((DateTime)h.DataInicio).Date && dataInicial.Date >= ((DateTime)h.DataFim).Date))
                                     )
                                 &&
-                                (HoraInicio >= Formater.TimeToInt(h.HoraInicio) && HoraFim < Formater.TimeToInt(h.HoraFim) ||
-                                (HoraFim > Formater.TimeToInt(h.HoraInicio) && HoraFim <= Formater.TimeToInt(h.HoraFim)))
+                                (
+                                    (horaInicio > Formater.TimeToInt(h.HoraInicio) && horaFim < Formater.TimeToInt(h.HoraFim)) ||
+                                    (horaFim > Formater.TimeToInt(h.HoraInicio) && horaFim <= Formater.TimeToInt(h.HoraFim)) ||
+                                    (horaInicio >= Formater.TimeToInt(h.HoraInicio) && horaInicio < Formater.TimeToInt(h.HoraFim))
+                                )
                                 && h.DiaSemana == diaSemana.ToString()).Distinct().ToList();
         }
     }
@@ -132,8 +143,12 @@ namespace CorporeRMApi.Models.Educacional
         [Required]
         public int CodHor { get; set; }
         [Required]
+        [DataType(DataType.Date)]
+        [Display(Name = "Data Inicial")]
         public DateTime DataInicio { get; set; }
         [Required]
+        [DataType(DataType.Date)]
+        [Display(Name = "Data Final")]
         public DateTime DataFim { get; set; }
         [Display(Name = "Dia Semana")]
         public string DiaSemana { get; set; }
@@ -143,6 +158,13 @@ namespace CorporeRMApi.Models.Educacional
         public string HoraFim { get; set; }
         public string Turno { get; set; }
         public string DesconsideraPonto { get; set; }
+        [JsonPropertyName("$state")]
+        public int State { get; set; }
+
+        public string GetDiaSemana()
+        {
+            return ((DiaSemana)int.Parse(DiaSemana)).GetDisplayName();
+        }
     }
 
     public class SAtivColaborador

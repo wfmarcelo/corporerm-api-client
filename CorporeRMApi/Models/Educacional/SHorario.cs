@@ -1,5 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using Uniarp.Extensions;
+using Uniarp.Util;
 
 namespace CorporeRMApi.Models.Educacional
 {
@@ -59,6 +61,25 @@ namespace CorporeRMApi.Models.Educacional
             hash.Add(Horario);
             hash.Add(Classificacao);
             return hash.ToHashCode();
+        }
+
+        public string GetDiaSemana()
+        {
+            return ((DiaSemana)DiaSemana).GetDisplayName();
+        }
+
+        public int GetCargaHoraria()
+        {
+            return Formater.TimeToInt(HoraFinal) - Formater.TimeToInt(HoraInicial);
+        }
+
+        public int GetHorarioInicialInt()
+        {
+            return Formater.TimeToInt(HoraInicial);
+        }
+        public int GetHorarioFinalInt()
+        {
+            return Formater.TimeToInt(HoraFinal);
         }
     }
 }

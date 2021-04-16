@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Uniarp.Extensions;
 using Uniarp.Util;
 
 namespace CorporeRMApi.Models.Educacional
@@ -23,8 +24,10 @@ namespace CorporeRMApi.Models.Educacional
         [MaxLength(10)]
         public string CodSala { get; set; }
         [Display(Name = "Data inicial")]
+        [DataType(DataType.Date)]
         public DateTime? DataInicial { get; set; }
         [Display(Name = "Data final")]
+        [DataType(DataType.Date)]
         public DateTime? DataFinal { get; set; }
         [MaxLength(60)]
         public string Locacao { get; set; }
@@ -126,9 +129,17 @@ namespace CorporeRMApi.Models.Educacional
                         (dataFinal.Date <= ((DateTime)h.DataInicial).Date && dataInicial.Date >= ((DateTime)h.DataFinal).Date))
                         )
                         &&
-                        (horaInicial >= Formater.TimeToInt(h.HoraInicial) && horaFinal < Formater.TimeToInt(h.HoraFinal) ||
-                        (horaFinal > Formater.TimeToInt(h.HoraInicial) && horaFinal <= Formater.TimeToInt(h.HoraFinal)))
+                        (
+                            (horaInicial >= Formater.TimeToInt(h.HoraInicial) && horaFinal < Formater.TimeToInt(h.HoraFinal)) ||
+                            (horaFinal > Formater.TimeToInt(h.HoraInicial) && horaFinal <= Formater.TimeToInt(h.HoraFinal)) ||
+                            (horaInicial >= Formater.TimeToInt(h.HoraInicial) && horaInicial <= Formater.TimeToInt(h.HoraFinal))
+                        )
                         && h.DiaSemana == diaSemana).Distinct().ToList();
+        }
+
+        public string GetDiaSemana()
+        {
+            return ((DiaSemana)DiaSemana).GetDisplayName();
         }
     }
 }
